@@ -9,47 +9,47 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Provide settings page for adding CSS/JS before the end of body tag.
  */
-class FooterForm extends ConfigFormBase {
+class HeaderForm extends ConfigFormBase {
 
   /**
    * Implements FormBuilder::getFormId.
    */
   public function getFormId() {
-    return 'hfs_footer_settings';
+    return 'hfs_header_settings';
   }
 
   /**
    * Implements ConfigFormBase::getEditableConfigNames.
    */
   protected function getEditableConfigNames() {
-    return ['hfs_footer_scripts.settings'];
+    return ['header_and_footer_scripts.header.settings'];
   }
 
   /**
    * Implements FormBuilder::buildForm.
    */
   public function buildForm(array $form, FormStateInterface $form_state, Request $request = NULL) {
-    $footer_section = $this->config('hfs_footer_scripts.settings')->get();
+    $header_section = $this->config('header_and_footer_scripts.header.settings')->get();
 
-    $form['hfs_footer'] = [
+    $form['hfs_header'] = [
       '#type'        => 'fieldset',
-      '#title'       => $this->t('Add Scripts and Styles in Footer'),
+      '#title'       => $this->t('Add Scripts and Styles in Header'),
       '#description' => $this->t('All the defined scripts and styles in this section would be added just before closing the <strong>body</strong> tag.'),
     ];
 
-    $form['hfs_footer']['styles'] = [
+    $form['hfs_header']['styles'] = [
       '#type'          => 'textarea',
-      '#title'         => $this->t('Footer Styles'),
-      '#default_value' => isset($footer_section['styles']) ? $footer_section['styles'] : '',
+      '#title'         => $this->t('Header Styles'),
+      '#default_value' => isset($header_section['styles']) ? $header_section['styles'] : '',
       '#description'   => $this->t('<p>You can add multiple <strong>stylesheets</strong> here with multiple ways, For example: </p><p>1. &lt;link type="text/css" rel="stylesheet" href="http://www.example.com/style.css" media="all" /&gt;</p><p> 2. &lt;link type="text/css" rel="stylesheet" href="/style.css" media="all" /&gt;</p><p> 3. &lt;style&gt;#header { color: grey; }&lt;/style&gt;</p>'),
       '#rows'          => 10,
     ];
 
-    $form['hfs_footer']['scripts'] = [
+    $form['hfs_header']['scripts'] = [
       '#type'          => 'textarea',
-      '#title'         => $this->t('Footer Scripts'),
-      '#default_value' => isset($footer_section['scripts']) ? $footer_section['scripts'] : '',
-      '#description'   => $this->t('<p>You can add multiple <strong>scripts</strong> here with multiple ways, For example: </p><p>1. &lt;script type="text/javascript" src="http://www.example.com/script.js"&gt;&lt;/script&gt;</p><p> 2. &lt;script type="text/javascript" src="/script.js"&gt;&lt;/script&gt;</p><p> 3. &lt;script type="text/javascript"&gt;console.log("HFS Footer");&lt;/script&gt;</p>'),
+      '#title'         => $this->t('Header Scripts'),
+      '#default_value' => isset($header_section['scripts']) ? $header_section['scripts'] : '',
+      '#description'   => $this->t('<p>You can add multiple <strong>scripts</strong> here with multiple ways, For example: </p><p>1. &lt;script type="text/javascript" src="http://www.example.com/script.js"&gt;&lt;/script&gt;</p><p> 2. &lt;script type="text/javascript" src="/script.js"&gt;&lt;/script&gt;</p><p> 3. &lt;script type="text/javascript"&gt;console.log("HFS Header");&lt;/script&gt;</p>'),
       '#rows'          => 10,
     ];
 
@@ -65,7 +65,7 @@ class FooterForm extends ConfigFormBase {
     $values = $form_state->getValues();
 
     $this->configFactory()
-      ->getEditable('hfs_footer_scripts.settings')
+      ->getEditable('header_and_footer_scripts.header.settings')
       ->set('styles', $values['styles'])
       ->set('scripts', $values['scripts'])
       ->save();
