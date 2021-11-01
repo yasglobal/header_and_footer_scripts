@@ -9,6 +9,8 @@ This module adds the styles and scripts on all over the site. There are 3
 setting pages. These setting pages are allow you add the scripts in the desired
 region.
 
+NOTE: HTML comments are not allowed/supported.
+
 ## REQUIREMENTS
 
 No special requirements.
